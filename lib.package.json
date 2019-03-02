@@ -1,0 +1,36 @@
+{
+  "name": "@chad/api",
+  "version": "2.0.0",
+  "description": "Chad is a location based chatroom service that allows users to start and join trending chatrooms in their area. Stay home and chat or travel the world and join chatrooms around the globe. Chad aims to provide quality communication services without sacrificing user privacy and trust.",
+  "author": "Lexus Drumgold <lex@lexusdrumgold.design> (https://lexusdrumgold.design)",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chad-app/chadbase.git"
+  },
+  "bugs": {
+    "url": "https://github.com/chad-app/chadbase/issues"
+  },
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "@feathersjs/errors": "^3.3.6",
+    "@feathersjs/express": "^1.3.1",
+    "@feathersjs/feathers": "^3.3.1",
+    "@feathersjs/socketio": "^3.2.9",
+    "@zeit/next-sass": "^1.0.1",
+    "axios": "^0.18.0",
+    "celebrate": "^9.0.2",
+    "dotenv": "^6.2.0",
+    "firebase": "^5.8.1",
+    "firebase-admin": "^7.0.0",
+    "firebase-functions": "^2.2.0",
+    "jquery": "^3.3.1",
+    "next": "^8.0.3",
+    "node-sass": "^4.11.0",
+    "react": "^16.8.2",
+    "react-dom": "^16.7.0",
+    "reactn": "^1.0.0"
+  },
+  "private": true
+}
