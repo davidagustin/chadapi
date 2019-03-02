@@ -12,9 +12,9 @@
   },
   "scripts": {
     "dev": "cp env/.env.development .env && nodemon --exec babel-node src/index.js",
-    "clean": "find ./lib -name \"*.js.map\" -exec rm {} \\; && m -rf lib/__tests__",
+    "clean": "find ./lib -name \"*.js.map\" -exec rm {} \\; && rm -rf lib/__tests__",
     "lint": "standard src/ --fix",
-    "prep": "cp src/config/chadbase.config.json lib/config/chadbase.config.json && cp lib.package.json lib/package.json && cp env/.env.production lib/.env && cd lib && npm install && cd ..",
+    "prep": "cp src/config/chadnetworkbase.config.json lib/config/chadnetworkbase.config.json && cp lib.package.json lib/package.json && cp env/.env.production lib/.env && cd lib && npm install && cd ..",
     "build": "rm -rf lib && babel -d ./lib ./src -s && npm run clean && npm run prep",
     "test": "clear && npm run lint && cp env/.env.test .env && jest src/",
     "stage": "npm run build && npm run test",
