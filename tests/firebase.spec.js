@@ -4,34 +4,36 @@ import {
 } from '../config/firebase.config'
 
 /**
- * @file Firebase configuration tests
+ * @file Firebase unit tests
  * @author Lexus Drumgold <lex@lexusdrumgold.design>
  */
 
-/*
- * Tests that Firebase application was properly initialized
- */
-test('firebase application should be non null', () => {
-  expect(FIREBASE_APP).not.toBe(null)
-})
+describe('firebase references', () => {
+  // tests that Firebase application was properly initialized
+  describe('the firebase application reference', () => {
+    it('should be non null', () => {
+      expect(FIREBASE_APP).not.toBe(null)
+    })
+  })
 
-/*
- * Tests that Firebase Authentication was properly initialized
- */
-test('firebase authentication should be non null', () => {
-  expect(FIREBASE_AUTH).not.toBe(null)
-})
+  // tests that Firebase Authentication was properly initialized
+  describe('the firebase authentication reference', () => {
+    it('firebase authentication should be non null', () => {
+      expect(FIREBASE_AUTH).not.toBe(null)
+    })
+  })
 
-/*
- * Tests that the Realtime Database was properly initialized
- */
-test('firebase database should be non null', () => {
-  expect(FIREBASE_DATABASE).not.toBe(null)
-})
+  // tests that Realtime Database was properly initialized
+  describe('the firebase database reference', () => {
+    it('firebase database should be non null', () => {
+      expect(FIREBASE_DATABASE).not.toBe(null)
+    })
+  })
 
-/*
- * Tests that Firebase Storage was properly initialized
- */
-test('firebase storage should be non null', () => {
-  expect(FIREBASE_STORAGE).not.toBe(null)
+  // tests that Firebase Storage was properly initialized
+  describe('the firebase storage reference', () => {
+    it('firebase storage should be non null', () => {
+      expect(FIREBASE_STORAGE).not.toBe(null)
+    })
+  })
 })

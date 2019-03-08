@@ -1,0 +1,54 @@
+{
+  "invalid_first_name": {
+    "display_name": {
+      "first": null,
+      "last": "Drumgold"
+    },
+    "birthday": "03/13/1998",
+    "gender_identity": "Male",
+    "email": "lexusdrumgold@gmail.com",
+    "username": "lex",
+    "password": "securepassword",
+    "c_password": "securepassword",
+    "bio": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur vel eleifend enim, a faucibus velit. Nulla iaculis sapien ac nisi porttitor, ac aliquet tellus tempor. Ut eu fermentum tortor. Duis facilisis sollicitudin ex. Pellentesque consequat velit nec turpis mattis nullam."
+  },
+  "invalid_username": {
+    "display_name": {
+      "first": "Lexus",
+      "last": "Drumgold"
+    },
+    "birthday": "03/13/1998",
+    "gender_identity": "Male",
+    "email": "lexusdrumgold@gmail.com",
+    "username": "",
+    "password": "securepassword",
+    "c_password": "securepassword",
+    "bio": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur vel eleifend enim, a faucibus velit. Nulla iaculis sapien ac nisi porttitor, ac aliquet tellus tempor. Ut eu fermentum tortor. Duis facilisis sollicitudin ex. Pellentesque consequat velit nec turpis mattis nullam."
+  },
+  "invalid_passwords": {
+    "display_name": {
+      "first": "Lexus",
+      "last": "Drumgold"
+    },
+    "birthday": "03/13/1998",
+    "gender_identity": "Male",
+    "email": "lexusdrumgold@gmail.com",
+    "username": "lex",
+    "password": "securepassword",
+    "c_password": "donotmatch",
+    "bio": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur vel eleifend enim, a faucibus velit. Nulla iaculis sapien ac nisi porttitor, ac aliquet tellus tempor. Ut eu fermentum tortor. Duis facilisis sollicitudin ex. Pellentesque consequat velit nec turpis mattis nullam."
+  },
+  "valid": {
+    "displsay_name": {
+      "first": "Lexus",
+      "last": "Drumgold"
+    },
+    "birthday": "03/13/1998",
+    "gender_identity": "Male",
+    "email": "lexusdrumgold@gmail.com",
+    "username": "lex",
+    "password": "securepassword",
+    "c_password": "securepassword",
+    "bio": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur vel eleifend enim, a faucibus velit. Nulla iaculis sapien ac nisi porttitor, ac aliquet tellus tempor. Ut eu fermentum tortor. Duis facilisis sollicitudin ex. Pellentesque consequat velit nec turpis mattis nullam."
+  }
+}

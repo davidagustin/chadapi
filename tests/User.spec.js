@@ -3,8 +3,8 @@
 // packages
 import { BadRequest } from '@feathersjs/errors'
 
-// config
-import { FIREBASE_AUTH } from '../src/config/firebase.config'
+// mocks
+import * as UserMocks from './__mocks__/User.mock.json'
 
 // test modules
 import { USER_HOOKS, User } from '../src/services'
@@ -17,116 +17,66 @@ import { cleanup_unit_tests } from '../src/utilities'
  * @author Lexus Drumgold <lex@lexusdrumgold.design>
  */
 
-/**
- * Tests that user data is properly validated before passed into User.find.
- */
-test('should not create a user when data is invalid.', async () => {
-  let user = {
-    display_name: {
-      first: null,
-      last: 'Drumgold'
-    },
-    birthday: 'March 13, 1998',
-    gender_identity: 'Male',
-    email: 'lexusdrumgold@gmail.com',
-    username: 'lex',
-    password: 'securepassword',
-    c_password: 'securepassword',
-    bio: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur vel eleifend enim, a faucibus velit. Nulla iaculis sapien ac nisi porttitor, ac aliquet tellus tempor. Ut eu fermentum tortor. Duis facilisis sollicitudin ex. Pellentesque consequat velit nec turpis mattis nullam.'
-  }
+describe('user service', () => {
+  // tests user is not created if display name is invalid
+  describe('USER_HOOKS.before.create', () => {
+    it('should not create a user when display name is invalid.', async () => {
+      let user = JSON.parse(UserMocks.invalid_display_name)
 
-  // invalid display name error
-  try {
-    console.warn('Attempting to create user with invalid display name...')
-    expect(await USER_HOOKS.before.create({ data: user })).toBe(undefined)
-  } catch (error) {
-    expect(error).toBeInstanceOf(BadRequest)
-  }
+      try {
+        console.warn('Attempting to create user with invalid display name...')
+        expect(await USER_HOOKS.before.create({ data: user })).toBe(undefined)
+      } catch (error) {
+        expect(error).toBeInstanceOf(BadRequest)
+      }
+    })
+  })
 
-  user.display_name.first = 'Lexus'
-  user.username = ''
+  // tests user is not created if username is invalid
+  describe('USER_HOOKS.before.create', () => {
+    it('should not create a user when username is invalid.', async () => {
+      let user = JSON.parse(UserMocks.invalid_username)
 
-  // invalid username error
-  try {
-    console.warn('Attempting to create user with invalid username...')
-    expect(await USER_HOOKS.before.create({ data: user })).toBe(undefined)
-  } catch (error) {
-    expect(error).toBeInstanceOf(BadRequest)
-  }
+      try {
+        console.warn('Attempting to create user with invalid username...')
+        expect(await USER_HOOKS.before.create({ data: user })).toBe(undefined)
+      } catch (error) {
+        expect(error).toBeInstanceOf(BadRequest)
+      }
+    })
+  })
 
-  user.username = 'lex'
-  user.c_password = 'securepass'
+  // tests user is not created if passwords don't match
+  describe('USER_HOOKS.before.create', () => {
+    it('should not create a user if passwords don`t match', async () => {
+      let user = JSON.parse(UserMocks.invalid_passwords)
 
-  // invalid passwords error
-  try {
-    console.warn('Attempting to create user with invalid passwords...')
-    expect(await USER_HOOKS.before.create({ data: user })).toBe(undefined)
-  } catch (error) {
-    expect(error).toBeInstanceOf(BadRequest)
-  }
-})
+      try {
+        console.warn('Attempting to create user with invalid passwords...')
+        expect(await USER_HOOKS.before.create({ data: user })).toBe(undefined)
+      } catch (error) {
+        expect(error).toBeInstanceOf(BadRequest)
+      }
+    })
+  })
 
-/**
- * Tests that a Firebase user is created.
- */
-test('a firebase user is created by the user service hook', async () => {
-  let user = {
-    display_name: {
-      first: 'Lexus',
-      last: 'Drumgold'
-    },
-    birthday: 'March 13, 1998',
-    gender_identity: 'Male',
-    email: 'lexusdrumgold@gmail.com',
-    username: 'lex',
-    password: 'securepassword',
-    c_password: 'securepassword',
-    bio: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur vel eleifend enim, a faucibus velit. Nulla iaculis sapien ac nisi porttitor, ac aliquet tellus tempor. Ut eu fermentum tortor. Duis facilisis sollicitudin ex. Pellentesque consequat velit nec turpis mattis nullam.'
-  }
+  // tests user is created
+  describe('USER_HOOKS.before.create + User.create()', () => {
+    it('should create a user', async () => {
+      let user = JSON.parse(UserMocks.valid)
 
-  console.warn('Attempting to create new user...')
+      console.warn('Attempting to create new Firebase user...')
+      user = await USER_HOOKS.before.create({ data: user })
+      expect(user).toBeInstanceOf(Object)
+      expect(user.data.username).toBe('lex')
+      console.info('Created new Firebase user:\n', user)
 
-  user = await USER_HOOKS.before.create({ data: user })
+      console.warn('Attempting to insert user into database...')
+      user = await (new User()).create(user.data)
+      expect(user.status).toBe(201)
+      console.info('Inserted user into database:\n', user)
 
-  expect(user).toBeInstanceOf(Object)
-
-  let data = user.data
-
-  console.info('Created new user:\n', user)
-  await FIREBASE_AUTH.deleteUser(data.uid)
-
-  expect(data.username).toBe('lex')
-})
-
-/**
- * Tests that a Firebase user is created and their data is inserted into the
- * database.
- */
-test('a firebase user is created and user data entry is created', async () => {
-  let user = {
-    display_name: {
-      first: 'Lexus',
-      last: 'Drumgold'
-    },
-    birthday: 'March 13, 1998',
-    gender_identity: 'Male',
-    email: 'lexusdrumgold@gmail.com',
-    username: 'lex',
-    password: 'securepassword',
-    c_password: 'securepassword',
-    bio: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur vel eleifend enim, a faucibus velit. Nulla iaculis sapien ac nisi porttitor, ac aliquet tellus tempor. Ut eu fermentum tortor. Duis facilisis sollicitudin ex. Pellentesque consequat velit nec turpis mattis nullam.'
-  }
-
-  console.warn('Attempting to create new Firebase user...')
-  user = await USER_HOOKS.before.create({ data: user })
-  expect(user).toBeInstanceOf(Object)
-  expect(user.data.username).toBe('lex')
-  console.info('Created new Firebase user:\n', user)
-
-  console.warn('Attempting to insert user into database...')
-  user = await (new User()).create(user.data)
-  expect(user.status).toBe(201)
-  console.info('Inserted user into database:\n', user)
-
-  await cleanup_unit_tests(user.data.uid)
+      await cleanup_unit_tests(user.data.uid)
+    })
+  })
 })
