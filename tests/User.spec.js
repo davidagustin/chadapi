@@ -4,16 +4,13 @@
 import { BadRequest } from '@feathersjs/errors'
 
 // config
-import { FIREBASE_AUTH } from '../config/firebase.config'
-
-// services
-import { User } from '../services'
+import { FIREBASE_AUTH } from '../src/config/firebase.config'
 
 // test modules
-import { USER_HOOKS } from '../hooks'
+import { USER_HOOKS, User } from '../src/services'
 
 // utility functions
-import { cleanup_unit_tests } from '../utilities'
+import { cleanup_unit_tests } from '../src/utilities'
 
 /**
  * @file User service hook unit tests
@@ -23,12 +20,14 @@ import { cleanup_unit_tests } from '../utilities'
 /**
  * Tests that user data is properly validated before passed into User.find.
  */
-test('an error is thrown when user data is invalid', async () => {
+test('should not create a user when data is invalid.', async () => {
   let user = {
     display_name: {
       first: null,
       last: 'Drumgold'
     },
+    birthday: 'March 13, 1998',
+    gender_identity: 'Male',
     email: 'lexusdrumgold@gmail.com',
     username: 'lex',
     password: 'securepassword',
@@ -39,7 +38,7 @@ test('an error is thrown when user data is invalid', async () => {
   // invalid display name error
   try {
     console.warn('Attempting to create user with invalid display name...')
-    await USER_HOOKS.before.create({ data: user })
+    expect(await USER_HOOKS.before.create({ data: user })).toBe(undefined)
   } catch (error) {
     expect(error).toBeInstanceOf(BadRequest)
   }
@@ -50,7 +49,7 @@ test('an error is thrown when user data is invalid', async () => {
   // invalid username error
   try {
     console.warn('Attempting to create user with invalid username...')
-    await USER_HOOKS.before.create({ data: user })
+    expect(await USER_HOOKS.before.create({ data: user })).toBe(undefined)
   } catch (error) {
     expect(error).toBeInstanceOf(BadRequest)
   }
@@ -61,7 +60,7 @@ test('an error is thrown when user data is invalid', async () => {
   // invalid passwords error
   try {
     console.warn('Attempting to create user with invalid passwords...')
-    await USER_HOOKS.before.create({ data: user })
+    expect(await USER_HOOKS.before.create({ data: user })).toBe(undefined)
   } catch (error) {
     expect(error).toBeInstanceOf(BadRequest)
   }
@@ -76,6 +75,8 @@ test('a firebase user is created by the user service hook', async () => {
       first: 'Lexus',
       last: 'Drumgold'
     },
+    birthday: 'March 13, 1998',
+    gender_identity: 'Male',
     email: 'lexusdrumgold@gmail.com',
     username: 'lex',
     password: 'securepassword',
@@ -86,6 +87,9 @@ test('a firebase user is created by the user service hook', async () => {
   console.warn('Attempting to create new user...')
 
   user = await USER_HOOKS.before.create({ data: user })
+
+  expect(user).toBeInstanceOf(Object)
+
   let data = user.data
 
   console.info('Created new user:\n', user)
@@ -104,6 +108,8 @@ test('a firebase user is created and user data entry is created', async () => {
       first: 'Lexus',
       last: 'Drumgold'
     },
+    birthday: 'March 13, 1998',
+    gender_identity: 'Male',
     email: 'lexusdrumgold@gmail.com',
     username: 'lex',
     password: 'securepassword',
@@ -113,6 +119,7 @@ test('a firebase user is created and user data entry is created', async () => {
 
   console.warn('Attempting to create new Firebase user...')
   user = await USER_HOOKS.before.create({ data: user })
+  expect(user).toBeInstanceOf(Object)
   expect(user.data.username).toBe('lex')
   console.info('Created new Firebase user:\n', user)
 

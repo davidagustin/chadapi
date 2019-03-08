@@ -8,12 +8,13 @@ Chad is a location based chatroom service that allows users to start and join tr
 [Getting Started](#getting-started) 
 [Usage](#usage)   
 [Development](#development)  
+[References](#references)  
 [Testing](#testing)  
 [Deployment](#deployment)  
 [Built With](#built-with)
 
 
-#### Getting Started
+### Getting Started
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
 
 #### Prerequisites
@@ -38,14 +39,15 @@ Follow the steps below to get your development enviroment set up.
       in the terminal. This will install the necessary dependencies for the
       project. A list of those dependencies can be found in `package.json`.
       
-3. Install Firebase command line tools using npm:
-    ```
-    npm install -g firebase-tools
-    ```  
-    
-4. To set up the Firebase targets, run the following in your terminal:
-    1. `firebase target:apply hosting staging staging-chad`
-    2. `firebase target:apply hosting production chadnetworkbase`
+3. Run `npm run setup` in your terminal. This will install the latest version of
+   Firebase Tools globally, configure the Firebase Hosting targets, and install
+   the rest of your project dependencies.
+  - To set up the Firebase targets manually, run the following in your terminal:
+    1. `firebase init`
+      - Choose the Firebase features you will use
+      - Complete the Firebase initialization
+    2. `firebase target:apply hosting staging <FIREBASE_STAGING_ID>`
+    3. `firebase target:apply hosting production <FIREBASE_PRODUCTION_ID>`
     
 
 ### Usage
@@ -55,7 +57,7 @@ Follow the steps below to get your development enviroment set up.
 ### Development
 1. Retreive the configuration files from an administrator.
 2. Run `npm run dev` to start the server. Nodemon will automatically restart the
-   server as you develop.
+   server as you make your changes.
 
 ##### Documentation
 Following [JSDoc](http://usejsdoc.org/) standards, be sure to document any functions, classes, and other
@@ -65,7 +67,13 @@ your pull request will be denied if any code is improperly documeted.
 For an overview of our JavaScript style guide, go to https://standardjs.com.
 
 
-#### Testing
+### References
+###### Attention: This section is under construciton.
+
+Helpful articles referenced during development.
+
+
+### Testing
 When you're ready to test your changes, run `npm test` in your project
 directory. This will build the project and run your tests, as well as all the tests in the `src/__tests__` directory.  
 
@@ -94,7 +102,7 @@ If you need to make additional changes, checkout your branch again, and then
 commit and push your changes.
 
 
-#### Deployment
+### Deployment
 Update `firebase.json` to configure Firebase Hosting, and push the changes to a
 release branch, if necessary. 
   - **Note:** The predeploy and rewrites properties are not mandatory for
@@ -112,5 +120,5 @@ Deploy using one of the following options:
 - Run `firebase deploy -m "<YOUR_MESSAGE>" --only functions,hosting:production` to deploy with an optional deploy message.
 
 
-#### Built With
+### Built With
 ###### Attention: This section is under construciton.

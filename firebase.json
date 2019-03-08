@@ -1,33 +1,33 @@
 {
   "functions": {
-    "source": "lib",
+    "source": "dist",
     "predeploy": [
-      "npm run build && cp lib.package.json lib/package.json && cp env/.env.production lib/.env"
+      "npm run build && npm run prep-api"
     ]
   },
   "hosting": [
     {
       "target": "staging",
-      "public": "lib/public",
+      "public": "dist/public",
       "predeploy": [
-        "npm run build"
+        "npm run prep-public"
       ],
       "rewrites": [
         {
-          "source": "api/**",
+          "source": "api/v1/**",
           "function": "api"
         }
       ]
     },
     {
       "target": "production",
-      "public": "lib/public",
+      "public": "dist/public",
       "predeploy": [
-        "npm run build"
+        "npm run prep-public"
       ],
       "rewrites": [
         {
-          "source": "api/**",
+          "source": "api/v1/**",
           "function": "api"
         }
       ]

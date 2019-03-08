@@ -4,7 +4,17 @@
  */
 
 module.exports = {
-  setupFiles: ['<rootDir>/node_modules/regenerator-runtime/runtime'],
-  testPathIgnorePatterns: ['/node_modules/'],
-  verbose: true
+  verbose: true,
+  testRegex: '(/(__tests__|tests)/.*|(\\.|/)(test|spec))\\.jsx?$',
+  testPathIgnorePatterns: [
+    '/node_modules/',
+    '<rootDir>/tests/__mocks__/*'
+  ],
+  testURL: 'http://localhost:8080',
+  moduleFileExtensions: [
+    'js'
+  ],
+  moduleDirectories: [
+    'node_modules'
+  ]
 }

@@ -6,7 +6,7 @@ import dotenv from 'dotenv'
 // config
 import FEATHERS_APP from './config/routes.config'
 import {
-  FUNCTIONS_HTTPS_REFERENCE, FUNCTIONS_USER_REFERENCE
+  FUNCTIONS_HTTPS_REF, FUNCTIONS_USER_DB_REF
 } from './config/firebase.config'
 
 /**
@@ -35,13 +35,13 @@ SERVER.on('listening', () => {
 /**
  * Firebase cloud function that serves the API.
  */
-const api = FUNCTIONS_HTTPS_REFERENCE.onRequest(SERVER)
+const api = FUNCTIONS_HTTPS_REF.onRequest(SERVER)
 
 /**
  * Sends a usage report to Slack when a new user is created, and a welcome email
  * to the new user.
  */
-const complete_signup = FUNCTIONS_USER_REFERENCE.onCreate((snap, context) => {
+const complete_signup = FUNCTIONS_USER_DB_REF.onCreate((snap, context) => {
 
 })
 

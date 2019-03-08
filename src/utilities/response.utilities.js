@@ -1,14 +1,10 @@
 /* eslint-disable camelcase */
 
-// modules
-import { ERROR_RESPONSE, SUCCESS_RESPONSE } from '../schema'
-import { validate_schema } from './app.utilities'
-
 /**
  * @file A set of response utility functions for throwing errors and handling
  * successful server operations.
- * @module response_utilities
- * [Reference]{@link https://developer.mozilla.org/en-US/docs/Web/HTTP/Status}
+ * @module ResponseUtilities
+ * @see {@link https://developer.mozilla.org/en-US/docs/Web/HTTP/Status}
  * @author Lexus Drumgold <lex@lexusdrumgold.design>
  */
 
@@ -24,21 +20,14 @@ import { validate_schema } from './app.utilities'
  * @throws {Error} stringified version error
  */
 export const success = success_obj => {
-  try {
-    // validate error schema
-    success_obj = validate_schema(success_obj, SUCCESS_RESPONSE)
+  const { status, message, data } = success_obj
 
-    const { status, message, data } = success_obj
+  success_obj = ok(message, data)
 
-    success_obj = ok(message, data)
+  if (status === 201) success_obj = created(message, data)
+  if (status === 204) success_obj = no_content(message, data)
 
-    if (status === 201) success_obj = created(message, data)
-    if (status === 204) success_obj = no_content(message, data)
-
-    return success_obj
-  } catch (error) {
-    return throw_error({ status: 500, message: error.message })
-  }
+  return success_obj
 }
 
 /**

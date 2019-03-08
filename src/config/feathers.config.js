@@ -6,11 +6,8 @@ import socketio from '@feathersjs/socketio'
 // config
 import { ROUTES } from './app.config'
 
-// services
-import { User } from '../services'
-
-// hooks
-import { APPLICATION_HOOKS, USER_HOOKS } from '../hooks'
+// service components
+import { User, APPLICATION_HOOKS, USER_HOOKS } from '../services'
 
 /**
  * @file Server configuration

@@ -13,6 +13,7 @@ import { throw_error, success } from './response.utilities'
  * A set of Firebase utility functions. Firebase must be initialized first.
  *
  * @file Utility functions for interacting with Firebase
+ * @module FirebaseUtilities
  * @author Lexus Drumgold <lex@lexusdrumgold.design>
  */
 
@@ -23,7 +24,7 @@ import { throw_error, success } from './response.utilities'
  * before being passed into the function.
  *
  * @param {object} data - new user data
- * @returns {boolean} true if data was modified
+ * @returns {object} modified data
  * @throws {BadRequest} if error creating Firebase account
  */
 export const create_firebase_user = async data => {
@@ -37,6 +38,8 @@ export const create_firebase_user = async data => {
       password: data.password
     })
 
+    console.info('Created Firebase user: \n', new_user)
+
     data.display_name = new_user.displayName
     data.uid = new_user.uid
 
@@ -44,11 +47,9 @@ export const create_firebase_user = async data => {
     delete data.password
     delete data.c_password
 
-    console.info('Created Firebase user: \n', new_user)
-
     return data
   } catch (error) {
-    let message = `Error creating Firebase user: ${error.messsage}`
+    let message = `Error creating Firebase user: ${error.errorInfo.message}`
     let err = throw_error({
       status: 400, messsage: message
     })

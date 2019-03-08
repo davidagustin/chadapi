@@ -1,20 +1,17 @@
 /* eslint-disable camelcase */
 
 // packages
-import axios from 'axios'
+import { Joi } from 'celebrate'
+import { BadRequest } from '@feathersjs/errors'
 
 // config
-import { JOI } from '../config/app.config'
 import {
   FIREBASE_AUTH, FIREBASE_DATABASE, FIREBASE_STORAGE
 } from '../config/firebase.config'
 
-// modules
-import { success, throw_error } from './response.utilities'
-
 /**
  * @file A set of utility functions for interacting with the application.
- * @module app
+ * @module AppUtilities
  * @author Lexus Drumgold <lex@lexusdrumgold.design>
  */
 
@@ -45,35 +42,6 @@ export const cleanup_unit_tests = async uid => {
 }
 
 /**
- * Forms a request.
- *
- * @param {string} method - method action
- * @param {string} url - url endpoint to request
- * @param {*} data - data to send with request
- * @param {string} response_type - data response type
- */
-export const request = async (method, url, data, response_type) => {
-  try {
-    let req = await axios({
-      crossdomain: true,
-      headers: { 'Access-Control-Allow-Origin': '*' },
-      method: method,
-      url: url,
-      data: data,
-      responseType: response_type
-    })
-
-    return success({
-      status: 200, message: 'Retreived data.', data: req.data
-    })
-  } catch (error) {
-    return throw_error({
-      status: error.response.status, message: error.response.data.error
-    })
-  }
-}
-
-/**
  * Compares the first argument against the schema provided in the first
  * argument.
  *
@@ -87,7 +55,7 @@ export const validate_schema = (data, schema) => {
 
   if (result.error) {
     console.error(`Validation error: ${result.error.message}\n`, data)
-    return throw_error({ status: 400, message: result.error.message })
+    throw new BadRequest(`Validation error: ${result.error.message}`)
   }
 
   return result.value

@@ -3,21 +3,19 @@
 
 // packages
 import { BadRequest } from '@feathersjs/errors'
+import moment from 'moment'
 
 // config
-import { ROUTES } from '../config/app.config'
-import { FIREBASE_AUTH, FIREBASE_STORAGE } from '../config/firebase.config'
+import { ROUTES } from '../../config/app.config'
 
-// schema
-import { USER_QUERY } from '../schema'
-
-// services
-import { User } from '../services'
+// user service components
+import { USER_QUERY } from './User.schema'
+import { User } from './User.model'
 
 // modules
 import {
   create_firebase_user, throw_error, validate_schema
-} from '../utilities'
+} from '../../utilities'
 
 /**
  * @file User service hooks
@@ -30,39 +28,30 @@ const USER_HOOKS = {
       // log the request
       console.info(`Received POST request for ${ROUTES.users.all}.\n`)
 
-      let data_copy = Object.assign({}, context.data)
-
-      // validate user data as a whole
-      console.log('Validating user data...')
-
-      let valid = User.validate(data_copy)
-      if (valid.boomitarts) {
-        console.error(`Invalid user data: `, valid)
-        throw new BadRequest(valid.message)
-      }
-
-      // create a new firebase user, then attach uid to context
       try {
-        context.data = await create_firebase_user(data_copy)
+        // validate user data
+        context.data = await User.validate(context.data)
+
+        // create a new firebase user, then attach uid to context
+        context.data = await create_firebase_user(context.data)
 
         /*
-         * TODO: create storage ref
          * new user is assumed to be created, and sensitive data has been
          * removed from context.data in create_firebase_user
          */
-        // context.data.storage_ref = `/users/${new_user.uid}`
-        // FIREBASE_STORAGE.bucket(data_copy.storage_ref)
+        const DATE = 'MM/DD/YYYY'
+        context.data.birthday = MOMENT(context.data.birthday).format(DATE)
 
         return context
       } catch (error) {
-        throw new BadRequest(JSON.stringify(error.message))
+        throw error
       }
     },
     async find(context) {
       // log the request
       console.info(`Received GET request for ${ROUTES.users.all}.\n`)
 
-      // check for a query to validate
+      // validate query
       console.log('Validating query...')
       try {
         context.params.query = validate_schema(context.params.query, USER_QUERY)
@@ -73,7 +62,6 @@ const USER_HOOKS = {
       }
 
       console.info(`Query valid: `, context.params.query)
-      console.log('\n')
 
       return context
     }

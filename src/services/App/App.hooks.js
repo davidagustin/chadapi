@@ -12,7 +12,7 @@ const APPLICATION_HOOKS = {
     const err = JSON.parse(error.message)
     const { boomitarts } = err
 
-    if (!boomitarts) return err
+    if (!chad) return err
   }
 }
 

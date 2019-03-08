@@ -3,6 +3,8 @@
     "first": "Lexus",
     "last": "Drumgold"
   },
+  "birthday": "March 13, 1998",
+  "gender_identity": "Male",
   "email": "lexusdrumgold@gmail.com",
   "username": "lex",
   "password": "securepassword",

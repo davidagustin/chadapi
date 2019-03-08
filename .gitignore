@@ -27,7 +27,7 @@ yarn-error.log*
 coverage
 
 # Compiled build files
-lib/
+dist/
 
 # Dependency directories
 node_modules/
@@ -36,12 +36,11 @@ node_modules/
 .npm
 
 # dotenv environment variables
-env/
 .env
 
 # config files
 src/config/chadnetworkbase.config.json
-lib/config/chadnetworkbase.config.json
+dist/config/chadnetworkbase.config.json
 
 
 # End of https://www.gitignore.io/api/node,macos,firebase
