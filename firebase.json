@@ -12,6 +12,13 @@
       "predeploy": [
         "npm run prep-public"
       ],
+      "redirects": [
+        {
+          "source": "/favicon.ico",
+          "destination": "/assets/favicon.ico",
+          "type": 301
+        }
+      ],
       "rewrites": [
         {
           "source": "api/v1/**",
@@ -24,6 +31,13 @@
       "public": "dist/public",
       "predeploy": [
         "npm run prep-public"
+      ],
+      "redirects": [
+        {
+          "source": "/favicon.ico",
+          "destination": "/assets/favicon.ico",
+          "type": 301
+        }
       ],
       "rewrites": [
         {
