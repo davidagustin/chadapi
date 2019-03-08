@@ -2,6 +2,7 @@
 import feathers from '@feathersjs/feathers'
 import express from '@feathersjs/express'
 import socketio from '@feathersjs/socketio'
+import favicon from 'serve-favicon'
 
 // config
 import { ROUTES } from './app.config'
@@ -29,6 +30,7 @@ import { User, APPLICATION_HOOKS, USER_HOOKS } from '../services'
 const FEATHERS_APP = express(feathers())
 
 FEATHERS_APP.use(express.static('../../public'))
+FEATHERS_APP.use(favicon('public/assets/favicon.ico'))
 FEATHERS_APP.use(express.json())
 FEATHERS_APP.use(express.urlencoded({ extended: true }))
 FEATHERS_APP.configure(express.rest())
