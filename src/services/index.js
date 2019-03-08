@@ -1,7 +1,13 @@
+// packages
+import dotenv from 'dotenv'
+
 /**
  * @file Manages the application services and accompanying schema and hooks
  * @author Lexus Drumgold <lex@lexusdrumgold.design>
  */
+
+// configure environment variables
+dotenv.config()
 
 // schema
 export {
