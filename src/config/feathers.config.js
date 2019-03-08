@@ -28,6 +28,7 @@ import { User, APPLICATION_HOOKS, USER_HOOKS } from '../services'
 
 const FEATHERS_APP = express(feathers())
 
+FEATHERS_APP.use(express.static('../../public'))
 FEATHERS_APP.use(express.json())
 FEATHERS_APP.use(express.urlencoded({ extended: true }))
 FEATHERS_APP.configure(express.rest())

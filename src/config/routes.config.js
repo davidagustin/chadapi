@@ -7,9 +7,17 @@ import { ROUTES } from './app.config'
  * @author Lexus Drumgold <lex@lexusdrumgold.design>
  */
 
+FEATHERS_APP.all('*', async (req, res, next) => {
+  console.info('Received request for Chad API at', req.path)
+  return next()
+})
+
+FEATHERS_APP.all('/', async (req, res, next) => {
+  return res.redirect(ROUTES.base)
+})
+
 FEATHERS_APP.all(ROUTES.base, async (req, res, next) => {
-  // TODO: serve documentation
-  res.send('Welcome to the Chad API!<br />Go to <code>/api/v1</code> to get started reading data.')
+  return res.sendFile('index.html', { root: 'public' })
 })
 
 FEATHERS_APP.all(ROUTES.api, async (req, res, next) => {
