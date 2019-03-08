@@ -6,8 +6,7 @@
     "@babel/plugin-proposal-class-properties",
     "@babel/plugin-proposal-export-default-from",
     "@babel/plugin-proposal-throw-expressions",
-    "@babel/plugin-syntax-dynamic-import",
-    "@babel/plugin-transform-regenerator"
+    "@babel/plugin-syntax-dynamic-import"
   ],
   "ignore": [
     "**/node_modules/**"

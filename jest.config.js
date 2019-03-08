@@ -10,11 +10,5 @@ module.exports = {
     '/node_modules/',
     '<rootDir>/tests/__mocks__/*'
   ],
-  testURL: 'http://localhost:8080',
-  moduleFileExtensions: [
-    'js'
-  ],
-  moduleDirectories: [
-    'node_modules'
-  ]
+  testURL: 'http://localhost:5000'
 }
