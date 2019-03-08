@@ -3,7 +3,7 @@ import * as admin from 'firebase-admin'
 import * as functions from 'firebase-functions'
 
 // config
-import * as credentials from './chadnetworkbase.config.json'
+import * as credentials from './firebase.config.json'
 
 /**
  * Firebase configuration

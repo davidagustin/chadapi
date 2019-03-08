@@ -42,12 +42,6 @@ Follow the steps below to get your development enviroment set up.
 3. Run `npm run setup` in your terminal. This will install the latest version of
    Firebase Tools globally, configure the Firebase Hosting targets, and install
    the rest of your project dependencies.
-  - To set up the Firebase targets manually, run the following in your terminal:
-    1. `firebase init`
-      - Choose the Firebase features you will use
-      - Complete the Firebase initialization
-    2. `firebase target:apply hosting staging <FIREBASE_STAGING_ID>`
-    3. `firebase target:apply hosting production <FIREBASE_PRODUCTION_ID>`
     
 
 ### Usage
