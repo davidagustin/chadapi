@@ -12,17 +12,17 @@ FEATHERS_APP.all('*', async (req, res, next) => {
   return next()
 })
 
-FEATHERS_APP.all('/', async (req, res, next) => {
-  return res.redirect(ROUTES.base)
-})
-
 FEATHERS_APP.all(ROUTES.base, async (req, res, next) => {
   return res.sendFile('index.html', { root: 'public' })
 })
 
+FEATHERS_APP.all(`${ROUTES.base}/docs`, async (req, res, next) => {
+  return res.sendFile('/docs/index.html', { root: 'public' })
+})
+
 FEATHERS_APP.all(ROUTES.api, async (req, res, next) => {
   // TODO: serve api documentation
-  res.send('Welcome to the Chad API!')
+  res.send('Welcome to version 1 of the Chad API!')
 })
 
 export default FEATHERS_APP

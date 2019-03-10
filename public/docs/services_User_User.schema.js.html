@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: services/User/User.schema.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: services/User/User.schema.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/* eslint-disable camelcase */
+
+// packages
+import { Joi } from 'celebrate'
+
+// config
+import { GENDER_OPTIONS } from '../../config/app.config'
+
+// modules
+import { throw_error } from '../../utilities'
+
+/**
+ * @file Manages user schema
+ * @author Lexus Drumgold &lt;lex@lexusdrumgold.design>
+ */
+
+const STRING = Joi.string().min(1)
+const PASSWORD = Joi.string().min(6)
+const URL = Joi.string().uri().allow(null)
+
+const NEW_USER = Joi.object().keys({
+  display_name: Joi.object().keys({
+    first: STRING.required().error(() => {
+      return throw_error({ status: 400, message: 'First names must be at least one character.' })
+    }),
+    last: STRING.allow(null).required().error(() => {
+      return throw_error({ status: 400, message: 'Last names must be at least one character or null.' })
+    })
+  }).required(),
+  birthday: Joi.date().max('now').required().error(() => {
+    return throw_error({
+      status: 400,
+      message: 'Birthdays are required. The youngest birthday allowed today.'
+    })
+  }),
+  gender_identity: Joi.string().valid(GENDER_OPTIONS).required().error(() => {
+    return throw_error({
+      status: 400, message: `Gender identity is required and must be one of the following options: ${GENDER_OPTIONS}`
+    })
+  }),
+  email: Joi.string().email().required().error(() => {
+    return throw_error({
+      status: 400, message: 'Email addresses are required.'
+    })
+  }),
+  username: STRING.required().error(() => {
+    return throw_error({ status: 400, message: 'Usernames are required and must be at least one character.' })
+  }),
+  password: PASSWORD.required().error(() => {
+    return throw_error({ status: 400, message: 'Passwords must be at least six characters.' })
+  }),
+  c_password: Joi.string().valid(Joi.ref('password')).required().error(() => {
+    return throw_error({ status: 400, message: 'Passwords do not match.' })
+  }),
+  bio: Joi.string().max(280).allow(null).required().error(() => {
+    return throw_error({ status: 400, message: 'Bios must be maximum 280 characters or null.' })
+  })
+}).required()
+
+const USER_UPDATE_OPTIONS = Joi.object().keys({
+  display_name: Joi.object().keys({
+    first: STRING.error(() => {
+      return throw_error({ status: 400, message: 'First names must be at least one character.' })
+    }),
+    last: STRING.allow(null).error(() => {
+      return throw_error({ status: 400, message: 'Last names must be at least one character or null.' })
+    })
+  }),
+  birthday: Joi.date().max('now').error(() => {
+    return throw_error({
+      status: 400,
+      message: 'Birthdays are required. The youngest birthday allowed today.'
+    })
+  }),
+  gender_identity: Joi.valid(GENDER_OPTIONS).error(() => {
+    return throw_error({
+      status: 400, message: `Gender identity is required and must be one of the following options: ${GENDER_OPTIONS}`
+    })
+  }),
+  email: Joi.string().email().error(() => {
+    return throw_error({
+      status: 400, message: 'Email addresses are required.'
+    })
+  }),
+  username: STRING.error(() => {
+    return throw_error({ status: 400, message: 'Usernames are required and must be at least one character.' })
+  }),
+  password: PASSWORD.error(() => {
+    return throw_error({ status: 400, message: 'Passwords must be at least six characters.' })
+  }),
+  bio: Joi.string().max(280).allow(null).error(() => {
+    return throw_error({ status: 400, message: 'Bios must be maximum 280 characters or null.' })
+  })
+}).required()
+
+const USER_QUERY = Joi.object().keys({
+  type: Joi.string().valid(['c_id', 'email', 'uid', 'username', null]),
+  identifier: Joi.string().allow(null)
+})
+
+export { STRING, PASSWORD, URL, NEW_USER, USER_UPDATE_OPTIONS, USER_QUERY }
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-AppUtilities.html">AppUtilities</a></li></ul><h3>Classes</h3><ul><li><a href="User.html">User</a></li></ul><h3>Global</h3><ul><li><a href="global.html#api">api</a></li><li><a href="global.html#complete_signup">complete_signup</a></li><li><a href="global.html#create">create</a></li><li><a href="global.html#find">find</a></li><li><a href="global.html#get">get</a></li><li><a href="global.html#patch">patch</a></li><li><a href="global.html#remove">remove</a></li><li><a href="global.html#update">update</a></li><li><a href="global.html#validate">validate</a></li><li><a href="global.html#validate_username">validate_username</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Sun Mar 10 2019 19:44:49 GMT-0400 (Eastern Daylight Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

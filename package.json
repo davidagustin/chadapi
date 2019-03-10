@@ -16,17 +16,19 @@
     "clean": "find ./dist -name \"*.js.map\" -exec rm {} \\;",
     "lint": "standard src/ --fix",
     "build": "npm run lint && rm -rf dist && babel -d ./dist ./src -s && npm run clean",
+    "test": "clear && cp env/.env.test .env",
+    "docs": "jsdoc --debug -r src/ -d public/docs",
     "prep-public": "cp -a public/. dist/public",
     "prep-api": "cp src/config/firebase.config.json dist/config/firebase.config.json && cp dist.package.json dist/package.json && cp env/.env.production dist/.env && cd dist && npm install && cd ..",
     "prep": "npm run prep-api && npm run prep-public",
-    "test": "clear && cp env/.env.test .env && jest",
-    "stage": "npm run build",
+    "stage": "npm run test && npm run build && npm run docs",
     "serve-staging": "npm run stage && npm run prep && cp env/.env.test dist/.env && firebase serve --only functions,hosting:staging",
     "serve-production": "npm run stage && npm run prep && firebase serve --only functions,hosting:production",
-    "deploy-staging": "firebase deploy ----only functions,hosting:staging",
-    "deploy-production": "firebase deploy ----only functions,hosting:production"
+    "deploy-staging": "firebase deploy --only functions,hosting:staging",
+    "deploy-production": "firebase deploy --only functions,hosting:production"
   },
   "dependencies": {
+    "@babel/polyfill": "^7.2.5",
     "@feathersjs/errors": "^3.3.6",
     "@feathersjs/express": "^1.3.1",
     "@feathersjs/feathers": "^3.3.1",
@@ -44,9 +46,9 @@
     "@babel/node": "^7.2.2",
     "@babel/plugin-proposal-class-properties": "^7.3.4",
     "@babel/plugin-proposal-export-default-from": "^7.2.0",
+    "@babel/plugin-proposal-export-namespace-from": "^7.2.0",
     "@babel/plugin-proposal-throw-expressions": "^7.2.0",
     "@babel/plugin-syntax-dynamic-import": "^7.2.0",
-    "@babel/polyfill": "^7.2.5",
     "@babel/preset-env": "^7.3.1",
     "babel-eslint": "^10.0.1",
     "babel-jest": "^24.0.0",
@@ -54,6 +56,15 @@
     "jsdoc": "^3.5.5",
     "nodemon": "^1.18.9",
     "standard": "^12.0.1"
+  },
+  "jest": {
+    "verbose": true,
+    "testRegex": "(/(__tests__|tests)/.*|(\\.|/)(test|spec))\\.jsx?$",
+    "testPathIgnorePatterns": [
+      "/node_modules/",
+      "<rootDir>/tests/__mocks__/*"
+    ],
+    "testURL": "http://localhost:8080"
   },
   "standard": {
     "parser": "babel-eslint",

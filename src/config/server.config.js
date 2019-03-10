@@ -17,16 +17,14 @@ dotenv.config()
 const { NODE_ENV, PORT } = process.env
 
 // start the server
-const SERVER = FEATHERS_APP.listen(PORT)
+const SERVER = FEATHERS_APP
 
-SERVER.on('listening', () => {
-  let message = `Listening on port ${PORT}`
+if (NODE_ENV === 'development') {
+  SERVER.listen(PORT)
 
-  if (NODE_ENV === 'development') {
-    message += (`\nServer ready at http://localhost:${PORT}`)
-  }
-
-  console.info(message)
-})
+  SERVER.on('listening', () => {
+    console.info(`Server ready at http://localhost:${PORT}`)
+  })
+}
 
 export default SERVER

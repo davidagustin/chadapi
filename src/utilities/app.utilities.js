@@ -19,8 +19,9 @@ import {
  * This function takes a uid and removes the Firebase user's references from
  * Authenication, the Realtime Database, and Firebase Storage.
  *
- * @param {*} uid
- * @returns {boolean} if references are removed successfully
+ * @param {string} uid - firebase id of user to clean up
+ * @returns {Promise<boolean>} promise containing true if references are removed
+ * successfully, false otherwise.
  */
 export const cleanup_unit_tests = async uid => {
   try {
@@ -46,12 +47,13 @@ export const cleanup_unit_tests = async uid => {
  * argument.
  *
  * @param {*} data - value being validated
- * @param {ObjectSchema} schema - schema to check against
- * @returns {*} value if schema is valid
+ * @param {Joi.Schema | object} schema - joi type object or a plain object where
+ * every key is assigned a joi type object using Joi.compile
+ * @returns {*} data argument if schema is valid
  * @throws {BadRequest} if error validating schema
  */
 export const validate_schema = (data, schema) => {
-  const result = JOI.validate(data, schema, { escapeHtml: true })
+  const result = Joi.validate(data, schema, { escapeHtml: true })
 
   if (result.error) {
     console.error(`Validation error: ${result.error.message}\n`, data)
