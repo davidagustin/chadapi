@@ -3,6 +3,7 @@
 
 // packages
 import { BadRequest } from '@feathersjs/errors'
+import { read_database } from '@flexdevelopment/utilities'
 
 // config
 import { USERS_SERVICE } from '../../config/feathers.config'
@@ -12,7 +13,7 @@ import { FIREBASE_AUTH, FIREBASE_DATABASE } from '../../config/firebase.config'
 import { NEW_USER } from './User.schema'
 
 // utiltity functions
-import { read, success, throw_error, validate_schema } from '../../utilities'
+import { validate_schema } from '../../utilities'
 
 /**
  * Class representing the user service.
@@ -22,69 +23,40 @@ import { read, success, throw_error, validate_schema } from '../../utilities'
  */
 export default class User {
   /**
-   * This function takes an object and validates it against the new user schema.
+   * This function takes a piece of user data as an argument and validates it
+   * against the new user schema. If the data as a whole is valid, the username
+   * will be checked. If schema is invalid or the username is invalid, an error
+   * will be thrown.
    *
    * @async
-   * @param {object} data
+   * @param {object} data - new user data to validate
    * @returns {object} if data is valid
+   * @throws {BadRequest} if user data doesn't match new user schema
    */
   static async validate(data) {
     console.info('Validating user data...')
 
+    // validate user data as a whole
     try {
       data = validate_schema(data, NEW_USER)
-
-      data.username = await User.validate_username(data.username)
-
-      console.log('Data valid.')
-      return data
+      console.info('User data as a whole valid. Checking username...')
     } catch (error) {
       throw error
     }
-  }
 
-  /**
-   * This function takes a username as an argument and checks if the username is
-   * available. If so, the username is returned. Otherwise, an error is thrown.
-   *
-   * @async
-   * @param {string} username - username to validate
-   * @returns {void} if username is valid
-   * @throws {BadRequest} if username is invalid or taken
-   */
-  static async validate_username(username) {
-    console.info('Validating username...')
-
-    if (!username || !username.trim().length) {
-      let message = 'Usernames must be at least one character.'
-
-      console.error(message)
-      throw new BadRequest(message)
+    // validate username
+    let options = {
+      database: FIREBASE_DATABASE,
+      location: '/users',
+      filter: { property: 'username', value: data.username }
     }
 
-    username = username.trim()
+    let read = await read_database(options)
+    if (!read.ok) throw new Error(read.message)
+    if (read.data.length) throw new BadRequest('Username in use.')
 
-    // check if username is in use
-    let filter = { type: 'username', identifier: username }
-    let users = await read({ location: '/users', filter: filter })
-
-    if (!users.ok) {
-      let message = `Error retreiving users while attempting to validate username: ${users.message}`
-
-      console.error(message)
-      throw new BadRequest(message)
-    }
-
-    // throw an error if the username is in use
-    if (users.data.length) {
-      let message = 'Username in use.'
-      console.error(message)
-      throw new BadRequest(message)
-    }
-
-    console.info('Username valid.')
-
-    return username
+    console.info('All user data is valid.')
+    return data
   }
 
   /**

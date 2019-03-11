@@ -40,7 +40,7 @@ const USER_HOOKS = {
          * removed from context.data in create_firebase_user
          */
         const DATE = 'MM/DD/YYYY'
-        context.data.birthday = MOMENT(context.data.birthday).format(DATE)
+        context.data.birthday = moment(context.data.birthday).format(DATE)
 
         return context
       } catch (error) {

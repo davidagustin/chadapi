@@ -358,7 +358,7 @@ has already been registered in Firebase by the user service hook.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="services_User_User.model.js.html">services/User/User.model.js</a>, <a href="services_User_User.model.js.html#line141">line 141</a>
+        <a href="services_User_User.model.js.html">services/User/User.model.js</a>, <a href="services_User_User.model.js.html#line113">line 113</a>
     </li></ul></dd>
     
 
@@ -516,7 +516,7 @@ database
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="services_User_User.model.js.html">services/User/User.model.js</a>, <a href="services_User_User.model.js.html#line97">line 97</a>
+        <a href="services_User_User.model.js.html">services/User/User.model.js</a>, <a href="services_User_User.model.js.html#line69">line 69</a>
     </li></ul></dd>
     
 
@@ -698,7 +698,7 @@ user.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="services_User_User.model.js.html">services/User/User.model.js</a>, <a href="services_User_User.model.js.html#line123">line 123</a>
+        <a href="services_User_User.model.js.html">services/User/User.model.js</a>, <a href="services_User_User.model.js.html#line95">line 95</a>
     </li></ul></dd>
     
 
@@ -903,7 +903,7 @@ updated.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="services_User_User.model.js.html">services/User/User.model.js</a>, <a href="services_User_User.model.js.html#line197">line 197</a>
+        <a href="services_User_User.model.js.html">services/User/User.model.js</a>, <a href="services_User_User.model.js.html#line169">line 169</a>
     </li></ul></dd>
     
 
@@ -1084,7 +1084,7 @@ the uid is unknown. If the user is found, their account will be deleted.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="services_User_User.model.js.html">services/User/User.model.js</a>, <a href="services_User_User.model.js.html#line210">line 210</a>
+        <a href="services_User_User.model.js.html">services/User/User.model.js</a>, <a href="services_User_User.model.js.html#line182">line 182</a>
     </li></ul></dd>
     
 
@@ -1289,7 +1289,7 @@ returns an error object regardless of the arguments passed in.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="services_User_User.model.js.html">services/User/User.model.js</a>, <a href="services_User_User.model.js.html#line182">line 182</a>
+        <a href="services_User_User.model.js.html">services/User/User.model.js</a>, <a href="services_User_User.model.js.html#line154">line 154</a>
     </li></ul></dd>
     
 
@@ -1353,7 +1353,10 @@ returns an error object regardless of the arguments passed in.
 
 
 <div class="description">
-    This function takes an object and validates it against the new user schema.
+    This function takes a piece of user data as an argument and validates it
+against the new user schema. If the data as a whole is valid, the username
+will be checked. If schema is invalid or the username is invalid, an error
+will be thrown.
 </div>
 
 
@@ -1405,7 +1408,7 @@ returns an error object regardless of the arguments passed in.
 
             
 
-            <td class="description last"></td>
+            <td class="description last">new user data to validate</td>
         </tr>
 
     
@@ -1446,7 +1449,7 @@ returns an error object regardless of the arguments passed in.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="services_User_User.model.js.html">services/User/User.model.js</a>, <a href="services_User_User.model.js.html#line31">line 31</a>
+        <a href="services_User_User.model.js.html">services/User/User.model.js</a>, <a href="services_User_User.model.js.html#line36">line 36</a>
     </li></ul></dd>
     
 
@@ -1467,6 +1470,35 @@ returns an error object regardless of the arguments passed in.
 
 
 
+<h5>Throws:</h5>
+
+        
+
+<dl>
+    <dt>
+        <div class="param-desc">
+        if user data doesn't match new user schema
+        </div>
+    </dt>
+    <dd></dd>
+    <dt>
+        <dl>
+            <dt>
+                Type
+            </dt>
+            <dd>
+                
+<span class="param-type">BadRequest</span>
+
+
+            </dd>
+        </dl>
+    </dt>
+    <dd></dd>
+</dl>
+
+
+    
 
 
 <h5>Returns:</h5>
@@ -1497,193 +1529,6 @@ returns an error object regardless of the arguments passed in.
 
 
         
-            
-
-    
-
-    
-    <h4 class="name" id="validate_username"><span class="type-signature">(async) </span>validate_username<span class="signature">(username)</span><span class="type-signature"> &rarr; {void}</span></h4>
-    
-
-    
-
-
-
-<div class="description">
-    This function takes a username as an argument and checks if the username is
-available. If so, the username is returned. Otherwise, an error is thrown.
-</div>
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-
-<table class="params">
-    <thead>
-    <tr>
-        
-        <th>Name</th>
-        
-
-        <th>Type</th>
-
-        
-
-        
-
-        <th class="last">Description</th>
-    </tr>
-    </thead>
-
-    <tbody>
-    
-
-        <tr>
-            
-                <td class="name"><code>username</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">username to validate</td>
-        </tr>
-
-    
-    </tbody>
-</table>
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="services_User_User.model.js.html">services/User/User.model.js</a>, <a href="services_User_User.model.js.html#line55">line 55</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-<h5>Throws:</h5>
-
-        
-
-<dl>
-    <dt>
-        <div class="param-desc">
-        if username is invalid or taken
-        </div>
-    </dt>
-    <dd></dd>
-    <dt>
-        <dl>
-            <dt>
-                Type
-            </dt>
-            <dd>
-                
-<span class="param-type">BadRequest</span>
-
-
-            </dd>
-        </dl>
-    </dt>
-    <dd></dd>
-</dl>
-
-
-    
-
-
-<h5>Returns:</h5>
-
-        
-<div class="param-desc">
-    if username is valid
-</div>
-
-
-
-<dl>
-    <dt>
-        Type
-    </dt>
-    <dd>
-        
-<span class="param-type">void</span>
-
-
-    </dd>
-</dl>
-
-    
-
-
-
-
-
-        
     
 
     
@@ -1699,13 +1544,13 @@ available. If so, the username is returned. Otherwise, an error is thrown.
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-AppUtilities.html">AppUtilities</a></li></ul><h3>Classes</h3><ul><li><a href="User.html">User</a></li></ul><h3>Global</h3><ul><li><a href="global.html#api">api</a></li><li><a href="global.html#complete_signup">complete_signup</a></li><li><a href="global.html#create">create</a></li><li><a href="global.html#find">find</a></li><li><a href="global.html#get">get</a></li><li><a href="global.html#patch">patch</a></li><li><a href="global.html#remove">remove</a></li><li><a href="global.html#update">update</a></li><li><a href="global.html#validate">validate</a></li><li><a href="global.html#validate_username">validate_username</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-AppUtilities.html">AppUtilities</a></li></ul><h3>Classes</h3><ul><li><a href="User.html">User</a></li></ul><h3>Global</h3><ul><li><a href="global.html#api">api</a></li><li><a href="global.html#complete_signup">complete_signup</a></li><li><a href="global.html#create">create</a></li><li><a href="global.html#find">find</a></li><li><a href="global.html#get">get</a></li><li><a href="global.html#patch">patch</a></li><li><a href="global.html#remove">remove</a></li><li><a href="global.html#update">update</a></li><li><a href="global.html#validate">validate</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Sun Mar 10 2019 19:44:49 GMT-0400 (Eastern Daylight Time)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Mon Mar 11 2019 10:14:19 GMT-0400 (Eastern Daylight Time)
 </footer>
 
 <script> prettyPrint(); </script>
